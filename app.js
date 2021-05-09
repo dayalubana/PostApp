@@ -12,7 +12,8 @@ mongoose.connect("mongodb+srv://daya:daya@cluster0.vzl5v.mongodb.net/Posts?retry
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: false}));
-app.use('/images',express.static(path.join('backend/images')))
+app.use('/images',express.static(path.join('backend/images')));
+app.use('/',express.static(path.join(__dirname,'angular')));
 
 app.use((req,res,next)=>{
     res.setHeader('Access-Control-Allow-Origin','*');
@@ -31,5 +32,8 @@ app.use((req,res,next)=>{
 
 app.use('/api/posts',posts);
 app.use('/api/user',users);
+app.use((req,res,next)=>{
+    res.sendFile(path.join(__dirname,'angular','index.html'));
+})
 
 module.exports = app;
