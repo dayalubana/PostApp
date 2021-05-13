@@ -106,7 +106,7 @@ exports.UpdatePost = (req,res)=>{
 }
 
 exports.DeletePost = (req,res)=>{
-    Post.deleteOne({_id: req.params.id, creator: req.userData.userId})
+    Post.deleteOne({_id: new ObjectId(req.params.id), creator: req.userData.userId})
     .then((re)=>{
         if(re.n==0){
             res.status(401).json({
