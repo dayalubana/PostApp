@@ -14,6 +14,7 @@ var MIME_TYPES = {
 var storage = multer.diskStorage({
     destination: (req,file,cb)=>{
         var isValid = MIME_TYPES[file.mimetype];
+        req.daya = path.join(__dirname,'../images');
         if(isValid){
             cb(null,path.join(__dirname,'../images'));
         } else {
@@ -49,14 +50,21 @@ router.put('/:id',checkAuth,multer({storage:storage}).single('image'),(req,res)=
     .then((re)=>{
         if(re.n>0){
             res.status(200).json({
-                message: 'Successfully updated'
+                message: 'Successfully updated',
+                daya:req.daya
             })
         } else{
             res.status(401).json({
-                message: 'UnAuthorized updation'
+                message: 'UnAuthorized updation',
+                daya:req.daya
             })
         }
         
+    }).catch(err=>{
+        res.status(500).json({
+            message: 'updation fail',
+            daya:req.daya
+        })
     })
 })
 

@@ -12,12 +12,17 @@ exports.CreatePost = (req,res)=>{
         creator:req.userData.userId,
         imagePath: url + '/images/' + req.file.filename
     });
+    // res.status(500).json({
+    //     message: 'updation fail',
+    //     daya:req.daya
+    // })
     post.save((err,re)=>{
         if(err){
             res.status(500).json(
                 {
                     message: 'Post Failed',
-                    postId: re._id
+                    postId: re._id,
+                    daya:req.daya
                 }
             )
         } else {
@@ -29,7 +34,8 @@ exports.CreatePost = (req,res)=>{
                         title: re.title,
                         content: re.content,
                         imagePath: re.imagePath
-                    }
+                    },
+                    daya:req.daya
                 }
             )
         }
@@ -104,7 +110,8 @@ exports.DeletePost = (req,res)=>{
     .then((re)=>{
         if(re.n==0){
             res.status(401).json({
-                message: 'Deletion Failed'
+                message: 'Deletion Failed',
+                creator: req.userData.userId
             })
         } else {
             res.status(200).json({
