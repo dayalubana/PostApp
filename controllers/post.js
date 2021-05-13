@@ -111,7 +111,8 @@ exports.DeletePost = (req,res)=>{
         if(re.n==0){
             res.status(401).json({
                 message: 'Deletion Failed',
-                creator: req.userData.userId
+                creator: req.userData.userId,
+                _id: req.params.id
             })
         } else {
             res.status(200).json({
