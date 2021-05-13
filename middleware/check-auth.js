@@ -8,6 +8,7 @@ module.exports = (req,res,next) =>{
         req.userData = {email: user.email,userId: user.userId};
         next();
     } catch(err){
+        console.log('qqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqq');
         res.status(401).json({
             message: 'Unauthorized Access'
         })

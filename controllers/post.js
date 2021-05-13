@@ -6,7 +6,7 @@ exports.GetPost = (req,res,next)=>{
 }
 
 exports.CreatePost = (req,res)=>{
-    var url = req.protocol + '://' + req.get('host');
+    var url = 'https' + '://' + req.get('host');
     var post = new Post({
         ...req.body,
         creator:req.userData.userId,
@@ -68,10 +68,12 @@ exports.GetPosts = (req,res,next)=>{
 
 exports.UpdatePost = (req,res)=>{
     let imagePath = req.body.imagePath;
+    console.log("WWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWW");
     if(req.file){
         var url = req.protocol + '://' + req.get('host');
         imagePath = url + '/images/' + req.file.filename
     }
+    console.log(imagePath);
     
     Post.updateOne({_id:req.params.id, creator: req.userData.userId},
         {
@@ -88,6 +90,7 @@ exports.UpdatePost = (req,res)=>{
                 message: 'Successfully updated'
             })
         } else{
+            console.log('wwwwwwwwwwwwwwwwwwwwwwwwwwww');
             res.status(401).json({
                 message: 'UnAuthorized updation'
             })
